@@ -4,7 +4,7 @@
 
 ### Cloning the Project
 
-To have a local copy of the project to work on clone the repository using the command `git clone https://github.com/Dawnz/amber-plumming-app.git` in the terminal.
+To have a local copy of the project to work on clone the repository using the command `git clone https://github.com/Dawnz/amber-plumming-app-backend.git` in the terminal.
 
 This will create a folder  in the directory specified in the terminal. Use the command ` cd <folder name>` to change the directory into the project folder.
 
