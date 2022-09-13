@@ -16,6 +16,4 @@ mongoose
 
 const port = process.env.PORT;
 
-const server = app.listen(port, () =>
-  console.log(`Connected to http://localhost:${port}`)
-);
+const server = app.listen(port, "0.0.0.0" );
