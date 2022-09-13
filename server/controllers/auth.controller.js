@@ -26,6 +26,8 @@ exports.register = async (req, res) => {
             })
         }
 
+        //Get user account type
+        const accountType = await userTypesModel.find({ type: type})
         //Hash password w/ bcrypt
         encryptedPassword = await bcrypt.hash(password, salt)
 
@@ -35,14 +37,13 @@ exports.register = async (req, res) => {
             lastName,
             email: email.toLowerCase(), // Sanitize: convert email to lowercase
             password: encryptedPassword,
-            type,
+            type: accountType[0]._id,
             phone
         })
 
         //Add the new user to the correct userTypes array
         const updatedUserArray = await userTypesModel.findById( user.type)
         updatedUserArray['users'].push( user._id)
-        console.log( updatedUserArray);
         updatedUserArray.save()
         
         //create access token 
