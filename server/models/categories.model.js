@@ -6,6 +6,8 @@ const categorySchema = new Schema ({
         type: String,
         required: true
     }
+}, {
+    timestamps: true
 })
 
 let Category = mongoose.model('category', categorySchema)
