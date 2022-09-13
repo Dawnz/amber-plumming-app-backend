@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
-const category = require('../controllers/category.controller')
+const categoryC = require('../controllers/category.controller')
 
-router.route('/').get(category.getAllProducts).post(category.createProduct)
+router.route('/').get(categoryC.getAllProducts).post(categoryC.createProduct)
 
-router.route('/:id').get(category.getProductById).put(category.updateProductById).delete(category.deleteProductById)
+router.route('/:id').get(categoryC.getProductById).put(categoryC.updateProductById).delete(categoryC.deleteProductById)
 
 module.exports = router

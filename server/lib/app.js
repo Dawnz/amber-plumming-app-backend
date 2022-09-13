@@ -6,6 +6,7 @@ const app = express();
 
 const categoryRoute = require('../routes/category.routes')
 const productRoute = require('../routes/product.routes')
+const orderRoute = require('../routes/order.routes')
 
 // Middleware
 app.use(morgan(':method :status :res[content-length] - :response-time ms'));
@@ -22,5 +23,6 @@ morgan.token('param', function(req, res, param) {
 
 app.use('/category', categoryRoute)
 app.use('/products', productRoute)
+app.use('/order', orderRoute)
 
 module.exports = app;
