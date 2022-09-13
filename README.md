@@ -1,4 +1,4 @@
-# amber-plumming-app-backend
+# amber-plumbing-app-backend
 
 ## Getting Started
 
@@ -40,9 +40,9 @@ in the application the server.js should be at the root of the application.
 ### Creating branch
 
 To make changes to the application you must first create a branch which will house the changes you will make.
-From the terminal run the command `git checkout -b <branch name>` to create a branch with the name you specify then swith from the main branch to that branch.
+From the terminal run the command `git checkout -b <branch name>` to create a branch with the name you specify then switch from the main branch to that branch.
 
-### Commiting Changes
+### Committing Changes
 
 Before you make a change ensure that you the most updated version of the project run the command `git pull`.
 After you make the necessary changes to the project, run the command `git add .` which adds all the changes to the staging area to signal that its ready to be committed. After which run the command `git commit -m "<message that describes the changes>"` to make changes to that branch.
@@ -51,7 +51,7 @@ After you make the necessary changes to the project, run the command `git add .`
 If it is your first time making changes, you should first run the command `git pull origin develop` to retrieve the latest code from the Team. 
 <br>
 
-If there is any merge conflicts you would need to first resolve them by accepting your changes or incomming changes from the Team's github branch. 
+If there is any merge conflicts you would need to first resolve them by accepting your changes or incoming changes from the Team's github branch. 
 After you have resolved the issues, commit the changes. This would therefore fix the merge conflict. When you have completed the merge you should then run the command `git push origin --set-upstream <your branch name here>` which will push the changes you have made to github in the branch that you defined in the command.
 
 <br>
