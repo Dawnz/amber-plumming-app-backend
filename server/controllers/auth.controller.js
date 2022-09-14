@@ -2,14 +2,15 @@ const User = require('../models/user.model')
 const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const { createAccessToken } = require('../lib/token')
+const userTypesModel = require('../models/userTypes.model')
 
 exports.register = async (req, res) => {
     try {
         // Deconstructor gets user input
-        const { firstName, lastName, email, password, phone } = req.body
+        const { firstName, lastName, email, password, phone, type } = req.body
 
         // Validate user input
-        if (!(email && password && firstName && lastName && phone)) {
+        if (!(email && password && firstName && lastName && phone && type)) {
             res.status(400).json({
                 status: "Failed",
                 message: "All fields are required"
@@ -34,12 +35,20 @@ exports.register = async (req, res) => {
             lastName,
             email: email.toLowerCase(), // Sanitize: convert email to lowercase
             password: encryptedPassword,
+            type,
             phone
         })
 
+        //Add the new user to the correct userTypes array
+        const updatedUserArray = await userTypesModel.findById( user.type)
+        updatedUserArray['users'].push( user._id)
+        console.log( updatedUserArray);
+        updatedUserArray.save()
+        
         //create access token 
         const accessToken = createAccessToken({ user: user._id })
 
+        // new query to return user with nly required fields
         user = await User.findById( user._id).select('-password')
 
         //return created user
@@ -48,7 +57,6 @@ exports.register = async (req, res) => {
             data: {
                 user,
                 accessToken,
-
             }
         })
     } catch (err) {

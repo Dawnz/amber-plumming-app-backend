@@ -9,6 +9,7 @@ const productRoute = require('../routes/product.routes')
 const orderRoute = require('../routes/order.routes')
 const authRoute = require( '../routes/auth.routes')
 const serviceRequestsRoute = require( '../routes/serviceRequests.routes')
+const userTypeRoute = require( '../routes/userType.routes')
 
 // Middleware
 app.use(morgan(':method :status :res[content-length] - :response-time ms'));
@@ -28,5 +29,6 @@ app.use('/products', productRoute)
 app.use('/order', orderRoute)
 app.use( '/auth', authRoute)
 app.use( '/serviceRequests', serviceRequestsRoute)
+app.use( '/userTypes', userTypeRoute)
 
 module.exports = app;
