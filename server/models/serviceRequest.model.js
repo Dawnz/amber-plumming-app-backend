@@ -1,6 +1,6 @@
 const mongoose = require( 'mongoose')
 
-const serviceRequestSchema = new Schema({
+const serviceRequestSchema = new mongoose.Schema({
     clientID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
