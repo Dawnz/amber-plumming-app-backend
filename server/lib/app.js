@@ -9,6 +9,7 @@ const productRoute = require('../routes/product.routes')
 const orderRoute = require('../routes/order.routes')
 const authRoute = require( '../routes/auth.routes')
 const userTypeRoute = require( '../routes/userType.routes')
+const reviewRoute = require('../routes/review.route')
 
 // Middleware
 app.use(morgan(':method :status :res[content-length] - :response-time ms'));
@@ -26,7 +27,8 @@ morgan.token('param', function(req, res, param) {
 app.use('/category', categoryRoute)
 app.use('/products', productRoute)
 app.use('/order', orderRoute)
-app.use( '/auth', authRoute)
-app.use( '/userTypes', userTypeRoute)
+app.use('/auth', authRoute)
+app.use('/userTypes', userTypeRoute)
+app.use('/review', reviewRoute)
 
 module.exports = app;
