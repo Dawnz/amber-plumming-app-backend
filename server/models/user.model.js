@@ -18,14 +18,13 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Password must be specified']
     },
-    type: {
+    role: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userType',
+        ref: 'UserTypes',
         required: [true, 'User type must be specified']
     },
     phone: {
         type: String, 
-        required: [true, 'Phone number must be specified']
     },
     address: {
         type: mongoose.Schema.Types.ObjectId,

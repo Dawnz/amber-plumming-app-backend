@@ -7,10 +7,10 @@ const userTypesModel = require('../models/userTypes.model')
 exports.register = async (req, res) => {
     try {
         // Deconstructor gets user input
-        const { firstName, lastName, email, password, phone, type } = req.body
+        const { firstName, lastName, email, password, role } = req.body
 
         // Validate user input
-        if (!(email && password && firstName && lastName && phone && type)) {
+        if (!(email && password && firstName && lastName && role)) {
             res.status(400).json({
                 status: "Failed",
                 message: "All fields are required"
@@ -27,7 +27,8 @@ exports.register = async (req, res) => {
         }
 
         //Get user account type
-        const accountType = await userTypesModel.find({ type: type})
+        const accountType = await userTypesModel.find({ name: role})
+        console.log(accountType);
         //Hash password w/ bcrypt
         encryptedPassword = await bcrypt.hash(password, salt)
 
@@ -37,12 +38,11 @@ exports.register = async (req, res) => {
             lastName,
             email: email.toLowerCase(), // Sanitize: convert email to lowercase
             password: encryptedPassword,
-            type: accountType[0]._id,
-            phone
+            role: accountType[0]._id,
         })
 
         //Add the new user to the correct userTypes array
-        const updatedUserArray = await userTypesModel.findById( user.type)
+        const updatedUserArray = await userTypesModel.findById( user.role)
         updatedUserArray['users'].push( user._id)
         updatedUserArray.save()
         
@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
         const accessToken = createAccessToken({ user: user._id })
 
         // new query to return user with nly required fields
-        user = await User.findById( user._id).select('-password')
+        user = await User.findById( user._id).populate('role', 'name').select( 'firstName lastName email')
 
         //return created user
         res.status(201).json({
@@ -86,7 +86,7 @@ exports.login = async (req, res) => {
             //create access token
             const accessToken = createAccessToken( {user: user._id})
 
-            user = await User.findById( user._id).select('-password')
+            user = await User.findById( user._id).populate('role', 'name').select('firstName lastName email')
 
             //return created user
             res.status(201).json({
