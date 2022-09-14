@@ -109,3 +109,20 @@ exports.login = async (req, res) => {
         console.error(err);
     }
 }
+
+exports.profile = async( req, res) => {
+    try {
+        //get authenticated user
+        const user = await User.findById( req.user.user).populate( 'role', 'name').select( '-password -createdAt -updatedAt')
+        
+        //return authenticated user
+        res.status( 201).json({
+            status: "Success",
+            data: {
+                user
+            }
+        })
+    } catch (error) {
+        console.error( error)
+    }
+}
