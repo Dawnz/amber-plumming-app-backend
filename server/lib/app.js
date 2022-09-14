@@ -8,6 +8,7 @@ const categoryRoute = require('../routes/category.routes')
 const productRoute = require('../routes/product.routes')
 const orderRoute = require('../routes/order.routes')
 const authRoute = require( '../routes/auth.routes')
+const serviceRequestsRoute = require( '../routes/serviceRequests.routes')
 const userTypeRoute = require( '../routes/userType.routes')
 const reviewRoute = require('../routes/review.route')
 
@@ -27,8 +28,8 @@ morgan.token('param', function(req, res, param) {
 app.use('/category', categoryRoute)
 app.use('/products', productRoute)
 app.use('/order', orderRoute)
-app.use('/auth', authRoute)
-app.use('/userTypes', userTypeRoute)
-app.use('/review', reviewRoute)
+app.use( '/auth', authRoute)
+app.use( '/serviceRequests', serviceRequestsRoute)
+app.use( '/userTypes', userTypeRoute)
 
 module.exports = app;
