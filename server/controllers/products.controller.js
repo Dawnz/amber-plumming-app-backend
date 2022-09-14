@@ -1,81 +1,147 @@
-const products = require('../models/products.model')
+const productM = require("../models/products.model");
 
+/***
+ * *Get All Products
+*/
 exports.getAllProducts = async (req, res) => {
-    try {
-        let product = await products.find().populate('categoryID')
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
-    }
-}
+  try {
+    let product = await productM.find().populate("categoryID");
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
 
+/***
+ * *Search Products
+ * *Name
+ * *Description
+*/
+exports.searchProducts = async (req, res) => {
+  try {
+    let product = await productM
+      .find({
+        $or: [
+          { name: { $regex: req.params.key, $options: "i" } },
+          { description: { $regex: req.params.key, $options: "i" } },
+        ],
+      })
+      .populate("categoryID");
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
+
+/***
+ * *Get Product By Category
+*/
+exports.getProductsByCategory = async (req, res) => {
+  try {
+    const product = await productM
+      .find({ categoryID: req.params.id })
+      .populate("categoryID");
+    res.status(200).json({
+      status: "success",
+      length: product.length,
+      results: product,
+    });
+    console.log(product);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
+
+/***
+ * *Get Product By Id
+*/
 exports.getProductById = async (req, res) => {
-    try {
-        let product = await products.findById(req.params.id)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
-    }
-}
+  try {
+    let product = await productM.findById(req.params.id);
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
 
+/***
+ * *Create Product
+*/
 exports.createProduct = async (req, res) => {
-    try {
-        let product = await products.create(req.body)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
-    }
-}
+  try {
+    let product = await productM.create(req.body);
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
 
+/***
+ * *Update Product By Id
+*/
 exports.updateProductById = async (req, res) => {
-    try {
-        let product = await products.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
-    }
-}
+  try {
+    let product = await productM.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};
 
+/***
+ * *Delete Product By Id
+*/
 exports.deleteProductById = async (req, res) => {
-    try {
-        let product = await products.findByIdAndDelete(req.params.id)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
-    } catch (error) {
-        res.status(500).json({
-            status: "Fail",
-            message: error
-        })
-    }
-}
+  try {
+    let product = await productM.findByIdAndDelete(req.params.id);
+    res.status(200).json({
+      status: "Success",
+      length: product.length,
+      data: product,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "Fail",
+      message: error,
+    });
+  }
+};

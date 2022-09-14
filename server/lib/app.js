@@ -10,6 +10,7 @@ const orderRoute = require('../routes/order.routes')
 const authRoute = require( '../routes/auth.routes')
 const serviceRequestsRoute = require( '../routes/serviceRequests.routes')
 const userTypeRoute = require( '../routes/userType.routes')
+const reviewRoute = require('../routes/review.route')
 
 // Middleware
 app.use(morgan(':method :status :res[content-length] - :response-time ms'));
