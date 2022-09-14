@@ -2,10 +2,10 @@ const userTypes = require("../models/userTypes.model")
 
 exports.create = async ( req, res) => {
     //Deconstructor
-    const { userType } = req.body
+    const { type } = req.body
 
     const newUserType = await userTypes.create({
-        userType
+        type
     })
 
     res.status( 201).json({
