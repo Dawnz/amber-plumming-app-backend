@@ -1,11 +1,16 @@
 const orderM = require("../models/order.model");
+const UserM = require("../models/user.model");
 
 /***
  * * Get All Orders
-*/
+ */
 exports.getAllOrders = async (req, res) => {
   try {
-    let orders = await orderM.find({}).populate('products').populate('customerID').exec()
+    let orders = await orderM
+      .find({})
+      .populate("products")
+      .populate("customerID")
+      .exec();
     res.status(200).json({
       status: "Success",
       length: orders.length,
@@ -21,10 +26,14 @@ exports.getAllOrders = async (req, res) => {
 
 /***
  * * Get Orders By Customer ID
-*/
+ */
 exports.getCustomerOrders = async (req, res) => {
   try {
-    let orders = await orderM.find({customerID: req.params.id}).populate('products').populate('customerID').exec()
+    let orders = await orderM
+      .find({ customerID: req.params.id })
+      .populate("products")
+      .populate("customerID")
+      .exec();
     res.status(200).json({
       status: "Success",
       length: orders.length,
@@ -36,11 +45,11 @@ exports.getCustomerOrders = async (req, res) => {
       message: error,
     });
   }
-}
+};
 
 /***
  * * Create All Orders
-*/
+ */
 exports.createOrder = async (req, res) => {
   try {
     let order = await orderM.create({
@@ -49,6 +58,10 @@ exports.createOrder = async (req, res) => {
       orderTotal: req.body.orderTotal,
       products: req.body.products,
     });
+    const updatedCartArray = await UserM.findById(order.customerID);
+    updatedCartArray["orders"].push(order._id);
+    console.log(updatedCartArray);
+    updatedCartArray.save();
     res.status(200).json({
       status: "Success",
       length: order.length,
@@ -64,7 +77,7 @@ exports.createOrder = async (req, res) => {
 
 /***
  * * Get Order By Id
-*/
+ */
 exports.getOrderById = async (req, res) => {
   try {
     let order = await orderM.findById(req.params.id).populate("products");
@@ -83,7 +96,7 @@ exports.getOrderById = async (req, res) => {
 
 /***
  * * Update Order By Id
-*/
+ */
 exports.updateOrder = async (req, res) => {
   try {
     let order = await orderM.findByIdAndUpdate(req.params.id, req.body);
@@ -102,7 +115,7 @@ exports.updateOrder = async (req, res) => {
 
 /***
  * * Delete Order By Id
-*/
+ */
 exports.deleteOrder = async (req, res) => {
   try {
     let order = await orderM.findByIdAndDelete(req.params.id);
