@@ -1,6 +1,6 @@
 const mongoose = require( 'mongoose')
 
-const serviceRequestSchema = new Schema({
+const serviceRequestSchema = new mongoose.Schema({
     clientID: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'user',
@@ -25,7 +25,7 @@ const serviceRequestSchema = new Schema({
     }
 }, 
 {
-    timeStamps: true
+    timestamps: true
 })
 
 module.exports = mongoose.model("ServiceRequest", serviceRequestSchema)
