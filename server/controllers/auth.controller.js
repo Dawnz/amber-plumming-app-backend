@@ -28,6 +28,7 @@ exports.register = async (req, res) => {
 
         //Get user account type
         const accountType = await userTypesModel.find({ name: role})
+        console.log( accountType);
 
         //Hash password w/ bcrypt
         encryptedPassword = await bcrypt.hash(password, salt)

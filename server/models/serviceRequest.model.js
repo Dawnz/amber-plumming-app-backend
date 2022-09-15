@@ -6,9 +6,12 @@ const serviceRequestSchema = new mongoose.Schema({
         ref: 'user',
         required: [true, 'Client ID must be specified']
     },
-    description: {
+    title: {
         type: String,
         required: [true, ' A description must be specified']
+    },
+    description: {
+        type: String
     },
     image: {
         type: String
@@ -21,7 +24,8 @@ const serviceRequestSchema = new mongoose.Schema({
         ref: 'user'
     }, 
     status: {
-        type: String
+        type: String,
+        default: "Open"
     }
 }, 
 {

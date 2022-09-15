@@ -4,20 +4,19 @@ const User = require('../models/user.model')
 exports.create = async( req, res) => {
     try{
         //get serviceRequest data from deconstructor
-        const { description, image, } = req.body
-
+        const { title, description, image, } = req.body
 
         //create the service
         const service = await ServiceRequest.create({
             clientID: req.user.user,
+            title,
             description,
             image, 
         })
 
-        const serviceRequester = await User.findById(clientID)
+        const serviceRequester = await User.findById(req.user.user)
 
         serviceRequester['serviceRequests'].push(service._id)
-        console.log( serviceRequester);
 
         serviceRequester.save()
 
