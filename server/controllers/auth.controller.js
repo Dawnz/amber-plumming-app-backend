@@ -73,7 +73,7 @@ exports.login = async (req, res) => {
         //validate user input
         if (!(email && password)) {
             res.status(400).json({
-                status: "Failed",
+
                 message: "All fields are required"
             })
         }

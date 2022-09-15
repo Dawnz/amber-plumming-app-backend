@@ -8,8 +8,7 @@ exports.validateToken = (req, res, next) => {
 
         //If no token found
         if (token == null) {
-            res.status(400).json({
-                status: "Failed",
+            res.status(401).json({
                 message: "Token not found"
             })
         }
@@ -28,9 +27,8 @@ exports.validateToken = (req, res, next) => {
         })
 
     } else {
-        res.status( 400).json({
-            status: "Failed",
-            message: "No Auth Headers"
+        res.status( 401).json({
+            message: "unauthorized"
         })
     }
 }
