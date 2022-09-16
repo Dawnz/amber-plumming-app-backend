@@ -1,4 +1,5 @@
 const Users = require( '../models/user.model')
+const userTypes = require('../models/userTypes.model')
 
 exports.find = async( req, res) => {
     try {
@@ -90,6 +91,44 @@ exports.deleteOne = async( req, res) => {
         })
 
     } catch (error) {
+        console.error( error)
+    }
+}
+
+exports.getUsersByRole = async( req, res) => {
+    try {
+        //get all users by param role
+        const users = await userTypes.find({ name: req.params.role}).populate( 'users', ' firstName lastName email').select( 'name')
+
+        res.status( 200).json({
+            status: "Success",
+            data:{
+                users
+            }
+        })
+    } catch (error) {
+        console.error( error)
+    }
+}
+
+exports.userRequests = async( req, res) => {
+    try{
+        //get user and populate serviceRequests
+        const user = await Users.findById( req.params.id).populate({
+            path: 'serviceRequests',
+            select: {'updatedAt': 0},
+            populate: [{ path: 'assignedTo', select: { 'firstName': 1, 'lastName': 1, 'email': 1, 'phone': 1}}]
+        }).select( 'serviceRequests')
+
+        console.log(user);
+
+        res.status( 200).json({
+            status: "Success",
+            data: {
+                user
+            }
+        })
+    } catch ( error){
         console.error( error)
     }
 }
