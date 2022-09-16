@@ -7,7 +7,7 @@ const UserM = require("../models/user.model");
 exports.getAllOrders = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -49,7 +49,7 @@ exports.getAllOrders = async (req, res) => {
 exports.getCustomerOrders = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -130,7 +130,7 @@ exports.createOrder = async (req, res) => {
 exports.getOrderById = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -168,7 +168,7 @@ exports.getOrderById = async (req, res) => {
 exports.updateOrder = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -207,7 +207,7 @@ exports.updateOrder = async (req, res) => {
 exports.deleteOrder = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {

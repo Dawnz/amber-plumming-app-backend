@@ -52,7 +52,7 @@ exports.createProduct = async (req, res) => {
 exports.updateProductById = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {
@@ -87,7 +87,7 @@ exports.updateProductById = async (req, res) => {
 exports.deleteProductById = async (req, res) => {
     try {
         // get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {

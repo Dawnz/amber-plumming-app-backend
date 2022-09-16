@@ -1,4 +1,5 @@
 const productM = require("../models/products.model");
+const UserM = require( '../models/user.model')
 
 /***
  * *Get All Products
@@ -95,7 +96,7 @@ exports.getProductById = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -134,7 +135,7 @@ exports.createProduct = async (req, res) => {
 exports.updateProductById = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {
@@ -173,7 +174,7 @@ exports.updateProductById = async (req, res) => {
 exports.deleteProductById = async (req, res) => {
   try {
     // get user with role
-    const user = UserM.findById(req.user.user).populate('role')
+    const user = await UserM.findById(req.user.user).populate('role')
 
     //if user not found
     if (!user) {

@@ -45,7 +45,7 @@ exports.create = async (req, res) => {
 exports.find = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {
@@ -82,7 +82,7 @@ exports.find = async (req, res) => {
 exports.findOne = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {
@@ -129,7 +129,7 @@ exports.findOne = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {
@@ -174,7 +174,7 @@ exports.update = async (req, res) => {
 exports.deleteOne = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await User.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {

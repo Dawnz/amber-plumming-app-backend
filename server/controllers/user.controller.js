@@ -3,7 +3,7 @@ const Users = require('../models/user.model')
 exports.find = async (req, res) => {
     try {
         //get user with role
-        const user = User.findById(req.user.user).populate('role')
+        const user = await Users.findById(req.user.user).populate('role')
 
         //if user not found
         if (!user) {
@@ -12,6 +12,8 @@ exports.find = async (req, res) => {
                 message: "unauthorized activity"
             })
         }
+
+        console.log(user);
 
         // check if user is admin 
         if (user.role.name == 'Admin') {
@@ -39,10 +41,10 @@ exports.find = async (req, res) => {
 exports.findOne = async (req, res) => {
     try {
         //get user with role
-        const authUser = User.findById(req.user.user).populate('role')
+        const authUser = await Users.findById(req.user.user).populate('role')
 
         //if user not found
-        if (!user) {
+        if (!authUser) {
             res.status(401).json({
                 status: "Error",
                 message: "unauthorized activity"
@@ -84,10 +86,10 @@ exports.findOne = async (req, res) => {
 exports.update = async (req, res) => {
     try {
         //get user with role
-        const authUser = User.findById(req.user.user).populate('role')
+        const authUser = await User.findById(req.user.user).populate('role')
 
         //if user not found
-        if (!user) {
+        if (!authUser) {
             res.status(401).json({
                 status: "Error",
                 message: "unauthorized activity"
@@ -128,10 +130,10 @@ exports.update = async (req, res) => {
 exports.deleteOne = async (req, res) => {
     try {
         //get user with role
-        const authUser = User.findById(req.user.user).populate('role')
+        const authUser = await Users.findById(req.user.user).populate('role')
 
         //if user not found
-        if (!user) {
+        if (!authUser) {
             res.status(401).json({
                 status: "Error",
                 message: "unauthorized activity"
