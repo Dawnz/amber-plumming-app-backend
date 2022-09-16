@@ -3,11 +3,11 @@ const { validateToken } = require( '../middlewares/auth')
 const express = require('express')
 const router = express('router')
 
-router.route('/').get(find)
+router.route('/').get( validateToken).get(find)
 
 router.route('/:id')
-    .get( findOne)
+    .get( validateToken).get( findOne)
     .patch( validateToken).patch( update)
-    .delete( deleteOne)
+    .delete( validateToken).delete( deleteOne)
 
 module.exports = router
