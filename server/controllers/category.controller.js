@@ -1,4 +1,5 @@
 const category = require('../models/categories.model')
+const User = require('../models/user.model')
 
 exports.getAllProducts = async (req, res) => {
     try {
@@ -50,12 +51,31 @@ exports.createProduct = async (req, res) => {
 
 exports.updateProductById = async (req, res) => {
     try {
-        let product = await category.findByIdAndUpdate(req.params.id, req.body)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
+        //get user with role
+        const user = await User.findById(req.user.user).populate('role')
+
+        //if user not found
+        if (!user) {
+            res.status(401).json({
+                status: "Error",
+                message: "unauthorized activity"
+            })
+        }
+
+        // check if user is admin
+        if (user.role.name == 'Admin') {
+            let product = await category.findByIdAndUpdate(req.params.id, req.body)
+            res.status(200).json({
+                status: "Success",
+                length: product.length,
+                data: product
+            })
+        } else { //return error if not admin
+            res.status(401).json({
+                status: "Error",
+                message: "Unauthorized activity"
+            })
+        }
     } catch (error) {
         res.status(500).json({
             status: "Fail",
@@ -66,12 +86,31 @@ exports.updateProductById = async (req, res) => {
 
 exports.deleteProductById = async (req, res) => {
     try {
-        let product = await category.findByIdAndDelete(req.params.id)
-        res.status(200).json({
-            status: "Success",
-            length: product.length,
-            data: product
-        })
+        // get user with role
+        const user = await User.findById(req.user.user).populate('role')
+
+        //if user not found
+        if (!user) {
+            res.status(401).json({
+                status: "Error",
+                message: "unauthorized activity"
+            })
+        }
+        
+        // check if user is admin
+        if (user.role.name == 'Admin') {
+            let product = await category.findByIdAndDelete(req.params.id)
+            res.status(200).json({
+                status: "Success",
+                length: product.length,
+                data: product
+            })
+        }else { //return unauthorized if user is not admin
+            res.status(401).json({
+                status: "Error",
+                message: "Unauthorized activity"
+            })
+        }
     } catch (error) {
         res.status(500).json({
             status: "Fail",

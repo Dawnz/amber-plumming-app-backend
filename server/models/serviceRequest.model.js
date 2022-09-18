@@ -3,7 +3,7 @@ const mongoose = require( 'mongoose')
 const serviceRequestSchema = new mongoose.Schema({
     clientID: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        ref: 'User',
         required: [true, 'Client ID must be specified']
     },
     title: {
@@ -21,7 +21,7 @@ const serviceRequestSchema = new mongoose.Schema({
     },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'User'
     }, 
     status: {
         type: String,

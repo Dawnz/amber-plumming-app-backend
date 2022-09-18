@@ -1,4 +1,5 @@
 const productM = require("../models/products.model");
+const UserM = require( '../models/user.model')
 
 /***
  * *Get All Products
@@ -53,7 +54,7 @@ exports.searchProducts = async (req, res) => {
 exports.getProductsByCategory = async (req, res) => {
   try {
     const product = await productM
-      .find({ categoryID: req.params.id })
+      .find({ categoryId: req.params.id })
       .populate("categoryID");
     res.status(200).json({
       status: "success",
@@ -94,13 +95,32 @@ exports.getProductById = async (req, res) => {
 */
 exports.createProduct = async (req, res) => {
   try {
-    let product = await productM.create(req.body);
+    // get user with role
+    const user = await UserM.findById(req.user.user).populate('role')
+
+    //if user not found
+    if (!user) {
+      res.status(401).json({
+        status: "Error",
+        message: "unauthorized activity"
+      })
+    }
+
+    // check if user is admin
+    if (user.role.name == 'Admin'){
+      let product = await productM.create(req.body);
+      res.status(200).json({
+        status: "Success",
+        length: product.length,
+        data: product,
+      });
+    }else { //return unauthorized if user is not admin
+      res.status(401).json({
+        status: "Error",
+        message: "Unauthorized activity"
+      })
+    } 
     
-    res.status(200).json({
-      status: "Success",
-      length: product.length,
-      data: product,
-    });
   } catch (error) {
     res.status(500).json({
       status: "Fail",
@@ -114,12 +134,32 @@ exports.createProduct = async (req, res) => {
 */
 exports.updateProductById = async (req, res) => {
   try {
-    let product = await productM.findByIdAndUpdate(req.params.id, req.body);
-    res.status(200).json({
-      status: "Success",
-      length: product.length,
-      data: product,
-    });
+    // get user with role
+    const user = await UserM.findById(req.user.user).populate('role')
+
+    //if user not found
+    if (!user) {
+      res.status(401).json({
+        status: "Error",
+        message: "unauthorized activity"
+      })
+    }
+
+    // check if user is admin
+    if (user.role.name == 'Admin') {
+      let product = await productM.findByIdAndUpdate(req.params.id, req.body);
+      res.status(200).json({
+        status: "Success",
+        length: product.length,
+        data: product,
+      });
+    }else { //return unauthorized if user is not admin
+      res.status(401).json({
+        status: "Error",
+        message: "Unauthorized activity"
+      })
+    }
+    
   } catch (error) {
     res.status(500).json({
       status: "Fail",
@@ -133,12 +173,32 @@ exports.updateProductById = async (req, res) => {
 */
 exports.deleteProductById = async (req, res) => {
   try {
-    let product = await productM.findByIdAndDelete(req.params.id);
-    res.status(200).json({
-      status: "Success",
-      length: product.length,
-      data: product,
-    });
+    // get user with role
+    const user = await UserM.findById(req.user.user).populate('role')
+
+    //if user not found
+    if (!user) {
+      res.status(401).json({
+        status: "Error",
+        message: "unauthorized activity"
+      })
+    }
+
+    // check if user is admin
+    if (user.role.name == 'Admin'){
+      let product = await productM.findByIdAndDelete(req.params.id);
+      res.status(200).json({
+        status: "Success",
+        length: product.length,
+        data: product,
+      });
+    }else { //return unauthorized if user is not admin
+      res.status(401).json({
+        status: "Error",
+        message: "Unauthorized activity"
+      })
+    }
+    
   } catch (error) {
     res.status(500).json({
       status: "Fail",

@@ -12,6 +12,7 @@ const serviceRequestsRoute = require( '../routes/serviceRequests.routes')
 const userTypeRoute = require( '../routes/userType.routes')
 const userRoute = require( '../routes/user.routes')
 const reviewRoute = require('../routes/review.route')
+const addressRoute = require( '../routes/address.routes')
 
 
 // Middleware
@@ -35,5 +36,6 @@ app.use( '/auth', authRoute)
 app.use( '/serviceRequests', serviceRequestsRoute)
 app.use( '/userTypes', userTypeRoute)
 app.use( '/user', userRoute)
+app.use( '/address', addressRoute)
 
 module.exports = app;
