@@ -5,7 +5,7 @@ const productM = require("../models/products.model");
 */
 exports.getAllProducts = async (req, res) => {
   try {
-    let product = await productM.find().populate("categoryID");
+    let product = await productM.find().populate("categoryId");
     res.status(200).json({
       status: "Success",
       length: product.length,
@@ -33,7 +33,7 @@ exports.searchProducts = async (req, res) => {
           { description: { $regex: req.params.key, $options: "i" } },
         ],
       })
-      .populate("categoryID");
+      .populate("categoryId");
     res.status(200).json({
       status: "Success",
       length: product.length,
@@ -95,6 +95,7 @@ exports.getProductById = async (req, res) => {
 exports.createProduct = async (req, res) => {
   try {
     let product = await productM.create(req.body);
+    
     res.status(200).json({
       status: "Success",
       length: product.length,

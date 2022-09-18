@@ -63,6 +63,10 @@ exports.getReviewById = async (req, res) => {
 exports.createReview = async (req, res) => {
   try {
     let review = await reviewM.create(req.body);
+    const updatedReviewArray = await productM.findById(review.productID);
+    updatedReviewArray["reviews"].push(review._id);
+    console.log(updatedReviewArray);
+    updatedCartArray.save();
     res.status(200).json({
       status: "Success",
       data: review,

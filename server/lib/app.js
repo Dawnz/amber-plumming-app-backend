@@ -29,6 +29,7 @@ morgan.token('param', function(req, res, param) {
 
 app.use('/category', categoryRoute)
 app.use('/products', productRoute)
+app.use('/review', reviewRoute)
 app.use('/order', orderRoute)
 app.use( '/auth', authRoute)
 app.use( '/serviceRequests', serviceRequestsRoute)
