@@ -11,8 +11,11 @@ router
 router
   .route("/:id")
   .get( validateToken).get(OrderC.getOrderById)
-  .get( validateToken).get(OrderC.getCustomerOrders)
   .put( validateToken).put(OrderC.updateOrder)
   .delete( validateToken).delete(OrderC.deleteOrder);
+
+router
+  .route( "/customer/:id")
+  .get( validateToken).get( OrderC.getCustomerOrders)
 
 module.exports = router;
